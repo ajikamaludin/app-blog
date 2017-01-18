@@ -1,0 +1,3 @@
+git add .
+git commit -m " catatan nya apa"
+git push -u origin master
