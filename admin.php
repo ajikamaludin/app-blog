@@ -206,18 +206,22 @@ $tags = tampilkan_tag();
               <th>Aksi</th>
             </tr>
 		<?php	foreach ($tags as $tag) { ?>
-            <tr>
+            <tr id="tag_<?= $tag['id_tag']?>">
               <td><?= $tag['id_tag']?></td>
               <td><?= $tag['nama_tag']?></td>
               <td>
-								<span class="glyphicon glyphicon-pencil" aria-hidden="true" id></span>
-								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+								<button class="">
+									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Edit
+								</button>
+								<button class="hapus_tag" data-id-tag="<?= $tag['id_tag']?>" >
+									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Hapus
+								</button>
 							</td>
             </tr>
 		<?php } ?>
           </table>
-        </div>
 
+        </div>
         <!--End Of Tag Table View-->
 
         <!--This Is User Table View-->

@@ -21,10 +21,8 @@ function hasil($sql){
 
 function run($sql){
   global $koneksi;
-  //if(mysqli_query($koneksi,$sql)) return true;
-  //else return false;
 
-  if(mysqli_query($koneksi)){
+  if(mysqli_query($koneksi,$sql)){
     return true;
   }else{
     return false;
