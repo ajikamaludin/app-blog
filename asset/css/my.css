@@ -107,7 +107,7 @@ body {
   border-radius: 2px;
   padding-top: 10px;
   padding-bottom: 10px;
-  min-height: 490px;
+  min-height: 625px;
 }
 .dashboard-admin-main {
 	display: inline-block;
@@ -142,4 +142,13 @@ body {
   padding-left: 50px;
   margin-bottom: 175px;
   min-height: 100%;
+}
+#halo-admin{
+  font-size:25px;
+  font-weight:bold;
+  margin-bottom: 15px;
+}
+
+.tombol-tambah{
+  margin-bottom: 7px;
 }
