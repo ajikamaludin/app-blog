@@ -1,7 +1,14 @@
 <?php
+//Berhubungan Dengan Menampilkan
 function tampilkan_post(){
-  $sql = "SELECT post.id_post, post.judul_post, post.gambar_post, post.isi_post, post.waktu_post, post.penulis_post,users.id_user,users.nama,tag.nama_tag FROM `post`,`users`,`tag` WHERE post.penulis_post=users.id_user AND post.id_tag=tag.id_tag LIMIT 8";
+  $sql = "SELECT post.id_post, post.judul_post, post.gambar_post, post.isi_post, post.waktu_post, post.penulis_post,post.id_tag,users.id_user,users.nama,tag.nama_tag FROM `post`,`users`,`tag` WHERE post.penulis_post=users.id_user AND post.id_tag=tag.id_tag LIMIT 8";
   return hasil($sql);
+}
+
+function jumlah_post($table){
+  $sql = " SELECT * FROM $table";
+  $jumlah = mysqli_num_rows(hasil($sql));
+  echo $jumlah;
 }
 
 function tampilkan_post_per_id($id){
@@ -14,11 +21,46 @@ function tampil_slide_3(){
   return hasil($sql);
 }
 
+function tampilkan_tag(){
+  $sql = "SELECT id_tag,nama_tag FROM `tag`";
+  return hasil($sql);
+}
+
+function tambah_tag($nama){
+    if(!empty($nama)){
+      $nama_post = cek_string($nama);
+        if(cek_ada($nama_post,'tag')){
+          $sql = "INSERT INTO `tag` (`nama_tag`) VALUES ('$nama')";
+          if(run($sql)){
+            return true;
+          }else{
+            return false;
+          }
+        }else{
+          return false;
+        }
+    }else{
+    return false;
+  }
+}
+
+function tampilkan_komentar(){
+  $sql = "SELECT komentar.isi_komentar, komentar.waktu_komentar, post.id_post ,post.judul_post FROM komentar JOIN post ON komentar.id_post = post.id_post";
+  return hasil($sql);
+}
+
+function tampilkan_users(){
+  $sql = "SELECT users.nama, users.user_name FROM `users`";
+  return hasil($sql);
+}
+
+//Mengembalikan Hasil Query
 function hasil($sql){
   global $koneksi;
   return mysqli_query($koneksi,$sql);
 }
 
+//Mengambalikan Nilai Booblean Dari Hasil Query
 function run($sql){
   global $koneksi;
 
@@ -30,6 +72,8 @@ function run($sql){
 
 }
 
+
+//Fungsi Tambahan
 function potong_900($string){
 	$string = substr($string, 0, 1000);
 	return $string ."...";
@@ -40,12 +84,25 @@ function potong_300($string){
 	return $string ."...";
 }
 
+
+//Fungsi Pengecekan data
 function cek_string($data){
 	global $koneksi;
 	return mysqli_real_escape_string($koneksi, $data);
 }
 
-//function untuk login
+function cek_ada($data,$nama_table){
+  global $koneksi;
+  $sql = "SELECT * FROM $nama_table WHERE nama_$nama_table='$data'";
+  $tersedia = mysqli_num_rows(hasil($sql));
+  if($tersedia != 0){
+    return false;
+  }else{
+    return true;
+  }
+}
+
+//Fungsi Untuk Login
 function login_user($user, $password){
   $user = cek_string($user);
   $password = cek_string($password);
@@ -60,21 +117,4 @@ function login_user($user, $password){
   }
 
 }
-
-function tampilkan_tag(){
-  $sql = "SELECT id_tag,nama_tag FROM `tag`";
-  return hasil($sql);
-}
-
-function tampilkan_komentar(){
-  $sql = "";
-  return hasil($sql);
-}
-
-function tampilkan_users(){
-  $sql = "";
-  return hasil($sql);
-}
-
-
 ?>

@@ -83,6 +83,8 @@ if(!$user){
 
 $posts = tampilkan_post();
 $tags = tampilkan_tag();
+$komentars = tampilkan_komentar();
+$users = tampilkan_users();
 
 ?>
 <!--Headernya Sudah Login-->
@@ -126,13 +128,17 @@ $tags = tampilkan_tag();
             Selamat Datang Admin
           </p>
           <div class="dashboard-admin-main" style="background-color: #adf177;">
-              <h1>Posting : 10</h1>
-              <a href="#"><span class="glyphicon glyphicon-chevron-right arrow" aria-hidden="true"></span></a>
+              <h1>Posting : <?php jumlah_post('post')?></h1>
+              <a href="#" ><span class="glyphicon glyphicon-chevron-right arrow" aria-hidden="true"></span></a>
           </div>
           <div class="dashboard-admin-main" style="background-color:#a360df;">
-              <h1>Komentar : 10</h1>
-              <a href="#"><span class="glyphicon glyphicon-chevron-right arrow" aria-hidden="true"></span></a>
+              <h1>Komentar : <?php jumlah_post('komentar')?></h1>
+              <a href="#" id="komentar-table"><span class="glyphicon glyphicon-chevron-right arrow" aria-hidden="true"></span></a>
           </div>
+					<div class="dashboard-admin-main" style="background-color: #77f1c9;">
+							<h1>Users : <?php jumlah_post('users')?></h1>
+							<a href="#" id="user-table"><span class="glyphicon glyphicon-chevron-right arrow" aria-hidden="true"></span></a>
+					</div>
         </div>
         <!--End Of This Is Dashboard Admin-->
 
@@ -148,6 +154,7 @@ $tags = tampilkan_tag();
               <th>Konten</th>
               <th>Gambar</th>
               <th>Tanggal Post</th>
+							<th>Tag</th>
               <th>Aksi</th>
             </tr>
     <?php foreach ($posts as $post) {?>
@@ -156,6 +163,7 @@ $tags = tampilkan_tag();
               <td><?= potong_300($post['isi_post'])?></td>
               <td><?= $post['gambar_post']?></td>
               <td><?= $post['waktu_post']?></td>
+							<td><?= $post['nama_tag']?></td>
               <td>Hapus Edit</td>
             </tr>
     <?php } ?>
@@ -171,23 +179,21 @@ $tags = tampilkan_tag();
           </p>
           <table class="table table-hover">
             <tr>
-              <th>No</th>
+              <th>ID Post</th>
               <th>Post</th>
               <th>Komentar</th>
+							<th>Waktu Komentar</th>
               <th>Aksi</th>
             </tr>
+	<?php foreach( $komentars as $komentar ) { ?>
             <tr>
-              <td>1</td>
-              <td>Berita Pertama</td>
-              <td>Iki Isi ... isi ... isi ...</td>
+              <td><?= $komentar['id_post']?></td>
+              <td><?= $komentar['judul_post']?></td>
+              <td><?= $komentar['isi_komentar']?></td>
+							<td><?= $komentar['waktu_komentar']?></td>
               <td>Hapus Edit Balas</td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>Berita Kedua</td>
-              <td>Iki Isi ... isi ... isi ...</td>
-              <td>Hapus Balas</td>
-            </tr>
+	<?php } ?>
           </table>
         </div>
         <!--End Of This Is komentar Table View-->
@@ -210,7 +216,7 @@ $tags = tampilkan_tag();
               <td><?= $tag['id_tag']?></td>
               <td><?= $tag['nama_tag']?></td>
               <td>
-								<button class="">
+								<button class="edit_tag" data-id-tag="<?= $tag['id_tag']?>">
 									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Edit
 								</button>
 								<button class="hapus_tag" data-id-tag="<?= $tag['id_tag']?>" >
@@ -237,13 +243,14 @@ $tags = tampilkan_tag();
               <th>Password</th>
               <th>Aksi</th>
             </tr>
+	<?php foreach($users as $user) {?>
             <tr>
-              <td>1</td>
-              <td>Aji Kamaludin</td>
-              <td>ajikamaludin</td>
-              <td type="password">ajikamaludin</td>
+              <td><?= $user['nama']?></td>
+              <td><?= $user['user_name']?></td>
+              <td type="password">password</td>
               <td>Hapus Edit</td>
             </tr>
+	<?php } ?>
           </table>
         </div>
         <!--End Of User Table View-->
@@ -301,7 +308,8 @@ $tags = tampilkan_tag();
           </div>
 
           <button  class="btn btn-default" name="tambah_tag" id="tambah_tag">Tambah</button>
-					<div id="status_tambah_tag"></div>
+					<div id="tag-ditambahkan" >Tag Ditambahkan</div>
+					<div id="tag-gagal-ditambahkan" >Tag Gagal Ditambahkan</div>
       </div>
     </div>
   </div>

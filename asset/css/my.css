@@ -152,3 +152,12 @@ body {
 .tombol-tambah{
   margin-bottom: 7px;
 }
+
+#tag-ditambahkan{
+  display: none;
+  margin-top: 5px;
+}
+#tag-gagal-ditambahkan{
+  display: none;
+  margin-top: 5px;
+}

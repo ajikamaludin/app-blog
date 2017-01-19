@@ -67,9 +67,20 @@ $('#tambah_tag').on('click',function(){
   url: "functions/function.ajax.php",
   data: { nama_tag: nama_tag, aksi: "tambah_tag" },
   success: function(data){
-    console.log('berhasil menambah');
-    $('#tambah_nama_tag').val("");
-    $('#table_tag').append(data);
+    /*console.log(data);*/
+      if(data != 0){
+        console.log("Nilai 1 data masuk");
+        $('#tambah_nama_tag').val("");
+        $('#table_tag').append(data);
+        $('#tag-ditambahkan').fadeIn("slow");
+        $('#tag-ditambahkan').fadeOut( "slow");
+        $('#tambah_nama_tag').val("");
+      }else{
+        console.log("Nilai 0 data gagal masuk");
+        $('#tag-gagal-ditambahkan').fadeIn("slow");
+        $('#tag-gagal-ditambahkan').fadeOut( "slow");
+        $('#tambah_nama_tag').val("");
+      }
     }
   })
 });
@@ -87,4 +98,17 @@ $(document).on('click','.hapus_tag',function(){
     }
   })
 });
-//Edit Tag
+//Show Edit Tag
+$(document).on('click','.edit_tag',function(){
+  //console.log($(this).attr('data-id-tag'));
+  var id_edit_tag = $(this).attr('data-id-tag');
+  $.ajax({
+  method: "POST",
+  url: "functions/function.ajax.php",
+  data: { id_tag : id_edit_tag, aksi: "show_edit_tag" },
+  success: function(data){
+    console.log(data);
+    //$('#tag_'+id_edit_tag).append(data);
+    }
+  })
+});
