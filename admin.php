@@ -316,6 +316,22 @@ $users = tampilkan_users();
 </div>
 <!-- Akhir Dari Modal Tambah Tag -->
 
+<!-- Modal Edit Tag -->
+<div class="modal fade" id="edit_tag-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Tambah Tag</h4>
+      </div>
+      <div class="modal-body" id="modal-body-tag">
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Akhir Dari Modal Edit Tag -->
+
 <!--Akhir Dari Kumpulan Modal Tambah Data -->
 
     </div>

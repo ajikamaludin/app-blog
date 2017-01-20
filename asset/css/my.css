@@ -153,11 +153,11 @@ body {
   margin-bottom: 7px;
 }
 
-#tag-ditambahkan{
+#tag-ditambahkan,#tag-diupdate{
   display: none;
   margin-top: 5px;
 }
-#tag-gagal-ditambahkan{
+#tag-gagal-ditambahkan,#tag-gagal-diupdate{
   display: none;
   margin-top: 5px;
 }

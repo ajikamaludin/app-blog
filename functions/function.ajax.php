@@ -13,7 +13,7 @@ if($_POST['aksi'] == 'tambah_tag'){
                       <td>". $id_terahir ."</td>
                       <td>". $nama ."</td>
                     <td>
-                      <button class=''>
+                      <button class='edit_tag' data-id-tag='".$id_terahir."'>
                         <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>Edit
                       </button>
                       <button class='hapus_tag' data-id-tag='". $id_terahir ."' >
@@ -47,13 +47,37 @@ else if($_POST['aksi'] == 'show_edit_tag'){
   $var = mysqli_fetch_assoc($run);
   $nama_tag = $var['nama_tag'];
 
-  echo "    <div class='form-group'>
-              <label >Nama Tag </label>
-              <input type='text' class='form-control' id='edit_nama_tag' value='". $nama_tag ."'>
-            </div>
-            <button  class='btn btn-default' name='edit_tag' id='edit_tag'>Edit</button>
-  					<div id='status_edit_tag'></div>
-  ";
+  echo "<div id='tag_modal_". $id_tag ."'>
+          <div class='form-group' id='tag_modal_". $id_tag ."'>
+            <label >Nama Tag </label>
+            <input type='text' class='form-control' id='update_name_tag' value='".$nama_tag."'>
+          </div>
+
+          <button  class='btn btn-default' name='update_tag' id='update_tag' data-id-tag-update='".$id_tag."'>Ubah</button>
+        </div>
+        ";
+}
+
+else if($_POST['aksi'] == 'proses_edit_tag'){
+  $id_tag = $_POST['id_tag'];
+  $name_tag = $_POST['name_tag'];
+  $sql = "UPDATE `tag` SET `nama_tag` = '$name_tag' WHERE `tag`.`id_tag` = '$id_tag'";
+  if(run($sql)){
+    echo  "<tr id='tag_". $id_tag ."'>
+              <td>". $id_tag ."</td>
+              <td>". $name_tag ."</td>
+            <td>
+              <button class='edit_tag' data-id-tag='". $id_tag ."'>
+                <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>Edit
+              </button>
+              <button class='hapus_tag' data-id-tag='". $id_tag ."' >
+                <span class='glyphicon glyphicon-trash' aria-hidden='true'></span>Hapus
+              </button>
+            </td>
+            </tr>";
+  }else{
+    echo "0";
+  }
 }
 
 else {

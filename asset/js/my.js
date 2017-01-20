@@ -100,15 +100,33 @@ $(document).on('click','.hapus_tag',function(){
 });
 //Show Edit Tag
 $(document).on('click','.edit_tag',function(){
-  //console.log($(this).attr('data-id-tag'));
-  var id_edit_tag = $(this).attr('data-id-tag');
+var id_edit_tag = $(this).attr('data-id-tag');
   $.ajax({
-  method: "POST",
-  url: "functions/function.ajax.php",
-  data: { id_tag : id_edit_tag, aksi: "show_edit_tag" },
-  success: function(data){
-    console.log(data);
-    //$('#tag_'+id_edit_tag).append(data);
-    }
-  })
+    method: "POST",
+    url: "functions/function.ajax.php",
+    data: { id_tag : id_edit_tag, aksi: "show_edit_tag" },
+    success: function(data){
+      $("#modal-body-tag").append(data);
+      //console.log(data);
+      }
+  });
+$('#edit_tag-modal').modal('show');
+});
+//Proses Edit Tag
+$(document).on('click','#update_tag',function(){
+  var update_id_tag = $(this).attr('data-id-tag-update');
+  var update_name_tag = $('#update_name_tag').val();
+  /*console.log(update_name_tag);*/
+  $.ajax({
+    method: "POST",
+    url: "functions/function.ajax.php",
+    data: { id_tag : update_id_tag, name_tag : update_name_tag, aksi: "proses_edit_tag" },
+    success: function(data){
+      $('#tag_'+update_id_tag).remove();
+      $('#tag_modal_'+update_id_tag).remove();
+      $('#edit_tag-modal').modal('hide');
+      $('#table_tag').append(data);
+      /*console.log(data);*/
+      }
+  });
 });
