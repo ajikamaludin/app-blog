@@ -1,7 +1,11 @@
 <?php
 //Berhubungan Dengan Menampilkan
 function tampilkan_post(){
-  $sql = "SELECT post.id_post, post.judul_post, post.gambar_post, post.isi_post, post.waktu_post, post.penulis_post,post.id_tag,users.id_user,users.nama,tag.nama_tag FROM `post`,`users`,`tag` WHERE post.penulis_post=users.id_user AND post.id_tag=tag.id_tag LIMIT 8";
+  $sql = "SELECT post.id_post, post.judul_post,
+  post.gambar_post, post.isi_post, post.waktu_post,
+  post.penulis_post,post.id_tag,users.id_user,
+  users.nama,tag.nama_tag FROM `post`,`users`,`tag` WHERE post.penulis_post=users.id_user AND post.id_tag=tag.id_tag LIMIT 8";
+
   return hasil($sql);
 }
 
@@ -12,7 +16,10 @@ function jumlah_post($table){
 }
 
 function tampilkan_post_per_id($id){
-  $sql = "SELECT post.id_post, post.judul_post, post.gambar_post, post.isi_post, post.waktu_post, post.penulis_post,users.id_user,users.nama FROM `post`,`users` WHERE post.penulis_post=users.id_user AND id_post=$id";
+  $sql = "SELECT post.id_post, post.judul_post,
+  post.gambar_post, post.isi_post, post.waktu_post,
+  post.penulis_post,users.id_user,users.nama FROM `post`,`users` WHERE post.penulis_post=users.id_user AND id_post=$id";
+
   return hasil($sql);
 }
 
@@ -44,8 +51,42 @@ function tambah_tag($nama){
   }
 }
 
+function hapus_tag($id_tag){
+  if(!empty($id_tag)){
+    $sql = "DELETE FROM `tag` WHERE `tag`.`id_tag` = $id_tag";
+    return run($sql);
+  }else{
+    return false;
+  }
+}
+
+function show_edit_tag($id_tag){
+  $sql = "SELECT nama_tag FROM tag WHERE id_tag=$id_tag";
+  $run = hasil($sql);
+  $var = mysqli_fetch_assoc($run);
+  $nama_tag = $var['nama_tag'];
+  return $nama_tag;
+}
+
+function proses_edit_tag($id_tag,$nama_tag){
+  if(!empty($nama_tag)){
+      if(cek_ada($nama_tag,'tag')){
+        $sql = "UPDATE `tag` SET `nama_tag` = '$nama_tag' WHERE `tag`.`id_tag` = '$id_tag'";
+        if(run($sql)){
+          return true;
+        }else{
+          return false;
+        }
+      }else{ return false; }
+  }else{ return false; }
+
+}
+
 function tampilkan_komentar(){
-  $sql = "SELECT komentar.isi_komentar, komentar.waktu_komentar, post.id_post ,post.judul_post FROM komentar JOIN post ON komentar.id_post = post.id_post";
+  $sql = "SELECT komentar.isi_komentar,
+          komentar.waktu_komentar, post.id_post,
+          post.judul_post FROM komentar JOIN post ON komentar.id_post = post.id_post";
+
   return hasil($sql);
 }
 
@@ -60,15 +101,15 @@ function hasil($sql){
   return mysqli_query($koneksi,$sql);
 }
 
-//Mengambalikan Nilai Booblean Dari Hasil Query
+//Mengambalikan Nilai  Dari Hasil Query
 function run($sql){
   global $koneksi;
 
-  if(mysqli_query($koneksi,$sql)){
-    return true;
-  }else{
-    return false;
-  }
+    if(mysqli_query($koneksi,$sql)){
+      return true;
+    }else{
+      return false;
+    }
 
 }
 
@@ -102,7 +143,7 @@ function cek_ada($data,$nama_table){
   }
 }
 
-//Fungsi Untuk Login
+//Fungsi Untuk Cek User Login
 function login_user($user, $password){
   $user = cek_string($user);
   $password = cek_string($password);
@@ -116,5 +157,13 @@ function login_user($user, $password){
     else return false;
   }
 
+}
+
+//Fungsi Untuk User Logout
+function logout(){
+  session_start();
+  unset($_SESSION['user']);
+  session_destroy();
+  return true;
 }
 ?>

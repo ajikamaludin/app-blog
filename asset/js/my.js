@@ -57,8 +57,24 @@ $( "#komentar-table" ).click(function() {
 
 $('#login-modal').modal('show');
 
+//Logout
+$('#logout_keluar').on('click',function(){
+  $.ajax({
+  method: "POST",
+  url: "functions/function.ajax.php",
+  data: { aksi: "logout" },
+  success: function(data){
+    if(data){
+      window.location.assign(window.location.href);
+      console.log(data);
+    }else{
+      window.location.assign(window.location.href);
+    }
+  }
+  })
+});
 
-//AJAX DATA Insert, Update, Delete
+//AJAX DATA Insert, Update, Delete Tag
 //Tambah Tag
 $('#tambah_tag').on('click',function(){
   var nama_tag = $('#tambah_nama_tag').val();
@@ -112,6 +128,13 @@ var id_edit_tag = $(this).attr('data-id-tag');
   });
 $('#edit_tag-modal').modal('show');
 });
+//Batal Edit Tag
+$(document).on('click','#batal_update_tag',function(){
+  var update_id_tag = $(this).attr('data-id-tag-update');
+      $('#tag_modal_'+update_id_tag).remove();
+      $('#edit_tag-modal').modal('hide');
+});
+
 //Proses Edit Tag
 $(document).on('click','#update_tag',function(){
   var update_id_tag = $(this).attr('data-id-tag-update');
@@ -122,10 +145,16 @@ $(document).on('click','#update_tag',function(){
     url: "functions/function.ajax.php",
     data: { id_tag : update_id_tag, name_tag : update_name_tag, aksi: "proses_edit_tag" },
     success: function(data){
+      if(data != 0){
       $('#tag_'+update_id_tag).remove();
       $('#tag_modal_'+update_id_tag).remove();
       $('#edit_tag-modal').modal('hide');
       $('#table_tag').append(data);
+    }else{
+      console.log("Nilai 0 data gagal masuk");
+      $('#tag-gagal-diupdate').fadeIn("slow");
+      $('#tag-gagal-diupdate').fadeOut( "slow");
+    }
       /*console.log(data);*/
       }
   });

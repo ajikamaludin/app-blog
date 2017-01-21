@@ -10,7 +10,7 @@
     </div>
 
     <div class="side-menu">
-      <h4 class="post-judul"> Archive</h4>
+      <h3 class="post-judul"> Archive</h3>
       <details>
         <summary>
           Bulan
@@ -25,7 +25,10 @@
     </div>
 
     <div class="side-menu">
-      <h4 class="post-judul"> Tag </h4>
+      <h3 class="post-judul"> Tag </h3>
+      <?php foreach ($tags as $tag) { ?>
+          <h4 style="display:inline;" ><span class="label label-info"><?= $tag['nama_tag'] ?></span></h4>
+      <?php } ?>
     </div>
 
   </div>

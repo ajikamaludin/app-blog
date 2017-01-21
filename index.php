@@ -3,9 +3,6 @@ include "core/init.php";
 
 include "view/header.php";
 
-$posts = tampilkan_post();
-$slider = tampil_slide_3();
-
 //Bagian Slider
 include "view/slider.php";
 ?>
@@ -16,7 +13,11 @@ include "view/slider.php";
 <?php foreach ($posts as $post) { ?>
     <div class="post">
         <h2 class="post-judul"><a href='./post.php?id=<?=$post['id_post']?>'> <?= $post['judul_post'] ?> </a></h2>
-        <p class="author"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> <?= $post['nama'] ?> <span class="glyphicon glyphicon-time" aria-hidden="true" style="margin-left:5px;"></span> <?= $post['waktu_post'] ?> </p>
+        <p class="author">
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> <?= $post['nama'] ?>
+          <span class="glyphicon glyphicon-time" aria-hidden="true" style="margin-left:5px;"></span> <?= $post['waktu_post'] ?>
+          <span class="glyphicon glyphicon-comment" aria-hidden="true" style="margin-left:5px;"></span> 4 Komentar
+        </p>
         <img src='./asset/img/<?= $post['gambar_post']?>.png' class="post-gambar">
         <p class="post-isi"><?= potong_900($post['isi_post']) ?></p>
         <a href='./post.php?id=<?=$post['id_post']?>' class="btn btn-primary readmore-btn">Read More </a>

@@ -81,11 +81,6 @@ if(!$user){
 <?php
 }else{
 
-$posts = tampilkan_post();
-$tags = tampilkan_tag();
-$komentars = tampilkan_komentar();
-$users = tampilkan_users();
-
 ?>
 <!--Headernya Sudah Login-->
 <!DOCTYPE html>
@@ -110,16 +105,13 @@ $users = tampilkan_users();
           <li role="presentation" id="komentar-table"><a href="#">Komentar</a></li>
           <li role="presentation" id="tag-table"><a href="#">Tag</a></li>
           <li role="presentation" id="user-table"><a href="#">Users</a></li>
-          <li role="presentation"><a href="destroy.php">Keluar</a></li>
+          <li role="presentation" id="logout_keluar"><a href="#">Keluar</a></li>
         </ul>
       </div>
       <!--End Of Admin Menu-->
 
-      <!--div kosong-->
-      <div class="col-md-1"></div>
-      <!--Admin View-->
 
-			<div class="col-md-8 admin-panel2" id="view-panel">
+			<div class="col-md-9 admin-panel2" id="view-panel">
 
 
         <!--This Is Dashboard Admin-->
@@ -164,7 +156,14 @@ $users = tampilkan_users();
               <td><?= $post['gambar_post']?></td>
               <td><?= $post['waktu_post']?></td>
 							<td><?= $post['nama_tag']?></td>
-              <td>Hapus Edit</td>
+              <td>
+								<button class="edit_post" data-id-tag="<?= $tag['id_post']?>">
+									Edit
+								</button>
+								<button class="hapus_tag" data-id-tag="<?= $tag['id_tag']?>" >
+									Hapus
+								</button>
+							</td>
             </tr>
     <?php } ?>
           </table>
@@ -205,7 +204,8 @@ $users = tampilkan_users();
             Tag
           </p>
           <button class="btn btn-primary tombol-tambah" data-toggle="modal" data-target="#tambah-tag">Tambah Tag</button>
-          <table class="table table-hover" id="table_tag">
+          <table class="table table-hover">
+					<tbody id="table_tag">
             <tr>
               <th>ID Tag</th>
               <th>Nama Tag</th>
@@ -217,14 +217,15 @@ $users = tampilkan_users();
               <td><?= $tag['nama_tag']?></td>
               <td>
 								<button class="edit_tag" data-id-tag="<?= $tag['id_tag']?>">
-									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Edit
+									Edit
 								</button>
 								<button class="hapus_tag" data-id-tag="<?= $tag['id_tag']?>" >
-									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Hapus
+									Hapus
 								</button>
 							</td>
             </tr>
 		<?php } ?>
+					</tbody>
           </table>
 
         </div>
@@ -321,8 +322,8 @@ $users = tampilkan_users();
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Tambah Tag</h4>
+        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+        <h4 class="modal-title" id="myModalLabel">Edit Tag</h4>
       </div>
       <div class="modal-body" id="modal-body-tag">
 

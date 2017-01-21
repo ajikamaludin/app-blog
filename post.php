@@ -17,7 +17,6 @@ if($id = $_GET['id']){
   $gambar_post = 'notfound';
   $isi_post = '<h1 style='.'font-size:150px;'.'>Not Found</h1>';
 }
-$slider = tampil_slide_3();
 
 include "view/header.php";
 //Bagian Slider
